@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Pesach 2027 at Center Parcs Park Allgäu: travel agent package vs booking it ourselves.">
+<title>Allgäu Price Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one summary band (agent vs DIY), then a two-column workbench: controls left, itemised bill right */
+:root{
+  --bg:#f2f4ef; --surface:#ffffff; --line:#d6ddd3; --fg:#1d2a23; --mute:#5d6b62;
+  --pine:#21503b; --pine-soft:#e3ece5; --sky:#2f6f9a;
+  --good:#1f7a4a; --good-soft:#dff1e6; --bad:#b0412b; --bad-soft:#f7e2dc;
+  --display:'Literata', Georgia, serif; --body:'Figtree', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121815; --surface:#1a221e; --line:#2e3a33; --fg:#e6ece7; --mute:#9aa9a0;
+  --pine:#7fc4a0; --pine-soft:#20302a; --sky:#7fb6dc;
+  --good:#6fd39b; --good-soft:#1c3328; --bad:#f08a72; --bad-soft:#3a221c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --surface:#1a221e; --line:#2e3a33; --fg:#e6ece7; --mute:#9aa9a0;
+  --pine:#7fc4a0; --pine-soft:#20302a; --sky:#7fb6dc;
+  --good:#6fd39b; --good-soft:#1c3328; --bad:#f08a72; --bad-soft:#3a221c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+h1,h2{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(26px,4vw,38px)}
+h2{font-size:20px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pine);margin:0 0 6px}
+.lede{color:var(--mute);margin:8px 0 0;max-width:64ch}
+.num{font-variant-numeric:tabular-nums}
+
+.summary{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:stretch}
+.tot{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tot .lbl{font-size:13px;color:var(--mute);font-weight:600}
+.tot .big{font-family:var(--display);font-size:clamp(28px,4vw,40px);font-weight:700}
+.tot .sub{font-size:13px;color:var(--mute)}
+.tot.diy{border-color:var(--pine);box-shadow:inset 0 0 0 1px var(--pine)}
+.delta{border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:200px}
+.delta.good{background:var(--good-soft);color:var(--good)}
+.delta.bad{background:var(--bad-soft);color:var(--bad)}
+.delta .big{font-family:var(--display);font-size:30px;font-weight:700}
+.delta .sub{font-size:13px;font-weight:600}
+
+.bench{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:20px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:18px;min-width:0}
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+legend{font-weight:700;font-size:14px;margin-bottom:6px;padding:0}
+.hint{font-size:12px;color:var(--mute);margin:0}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--pine);background:var(--pine-soft)}
+.opt input{margin-top:3px;accent-color:var(--pine)}
+.opt .t{display:flex;justify-content:space-between;gap:8px;flex:1;min-width:0}
+.opt .t span:last-child{font-weight:600;white-space:nowrap}
+.opt small{display:block;color:var(--mute);font-size:12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;align-self:flex-start;background:var(--bg)}
+.seg button{border:0;background:transparent;color:var(--fg);font:inherit;font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--pine);color:var(--surface)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=number]{font:inherit;width:110px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);font-weight:700}
+td.r,th.r{text-align:right;white-space:nowrap}
+td small{display:block;color:var(--mute);font-size:12px}
+tr.sec td{font-weight:700;color:var(--pine);background:var(--pine-soft);font-size:13px}
+tr.total td{font-weight:700;font-size:15px;border-bottom:0;border-top:2px solid var(--fg)}
+.inc{color:var(--mute)}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.note{border-left:3px solid var(--sky);padding:2px 0 2px 12px;font-size:14px}
+.note b{display:block}
+@media (max-width:820px){.summary{grid-template-columns:1fr 1fr}.delta{grid-column:1/-1}.bench{grid-template-columns:1fr}.notes{grid-template-columns:1fr}}
+@media (max-width:460px){.summary{grid-template-columns:1fr}}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Center Parcs Park Allgäu · Fri 23 – Fri 30 April 2027</p>
+    <h1>Travel agent package vs booking it ourselves</h1>
+    <p class="lede">Two families, each 2 adults and 2 kids (ages 4 and 7). Direct Lufthansa TLV ⇄ Munich on both sides. Pick options on the left and the totals update. Food and the park e-car are added to both columns, since the agent quote doesn't include them either.</p>
+  </header>
+
+  <div class="seg" role="group" aria-label="Show totals for">
+    <button type="button" id="v-both" aria-pressed="true">Both families</button>
+    <button type="button" id="v-fam" aria-pressed="false">Per family</button>
+  </div>
+
+  <section class="summary" aria-live="polite">
+    <div class="tot"><span class="lbl">Travel agent</span><span class="big num" id="s-agent">€0</span><span class="sub num" id="s-agent-sub"></span></div>
+    <div class="tot diy"><span class="lbl">Booking ourselves</span><span class="big num" id="s-diy">€0</span><span class="sub num" id="s-diy-sub"></span></div>
+    <div class="delta good" id="s-delta"><span class="sub" id="s-delta-lbl">We save</span><span class="big num" id="s-delta-val">€0</span><span class="sub num" id="s-delta-sub"></span></div>
+  </section>
+
+  <div class="bench">
+    <form class="panel" id="controls" onsubmit="return false">
+      <fieldset>
+        <legend>Cottage (one per family)</legend>
+        <div class="opts" id="o-cottage"></div>
+        <p class="hint">Early-booking prices for 23–30 Apr 2027. Holiday tax is extra.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Rental car at Munich Airport (8 days)</legend>
+        <div class="opts" id="o-car"></div>
+        <div class="row"><span>Number of cars</span>
+          <div class="seg" role="group" aria-label="Number of cars"><button type="button" data-cars="1" aria-pressed="false">1</button><button type="button" data-cars="2" aria-pressed="true">2</button></div></div>
+        <p class="hint">All are 5-seaters, so 8 people need 2 cars.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Flights</legend>
+        <div class="row"><label for="i-flight">USD per person, return</label><input type="number" id="i-flight" min="0" step="1" value="818.68"></div>
+        <p class="hint">Lufthansa Economy Comfort Plus, 07:00 out, 11:10 back (lands 16:00).</p>
+      </fieldset>
+      <fieldset>
+        <legend>Park food plan (7 days)</legend>
+        <div class="opts" id="o-food"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Park e-car / golf cart (7 days)</legend>
+        <div class="opts" id="o-ecar"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Exchange rate</legend>
+        <div class="row"><label for="i-fx">USD per €1</label><input type="number" id="i-fx" min="0.5" step="0.01" value="1.17"></div>
+        <p class="hint">Flights and cars were quoted in dollars. Update to today's rate.</p>
+      </fieldset>
+    </form>
+
+    <section class="panel">
+      <h2>Itemised</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Item</th><th class="r">Agent</th><th class="r">Ourselves</th></tr></thead>
+          <tbody id="bill"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <div class="note"><b>Same flights</b>The agent quotes the exact same Lufthansa times (07:00 out, 11:10 back), so the flight experience is identical.</div>
+    <div class="note"><b>Check the flight price basis</b>$818.68 is assumed to be per person, with checked bags. The agent includes full baggage, so confirm Comfort Plus covers a checked bag each.</div>
+    <div class="note"><b>Car insurance</b>The agent includes excess-refund insurance. Self-booked car prices may not, which can add roughly $10–20 a day per car.</div>
+    <div class="note"><b>Which cottage did the agent price?</b>The quote only says "2 adjacent cottages". Ask the category, and confirm towels and bedding are included on our booking too.</div>
+  </section>
+</div>
+
+<script>
+const COTTAGES=[
+ {id:'comfort',name:'Comfort cottage',meta:'4 people · 2 bedrooms · 56 m²',eur:1288},
+ {id:'prem4',name:'Premium cottage',meta:'4 people · 2 bedrooms · 60 m² · dishwasher',eur:1359},
+ {id:'prem6',name:'Premium cottage, larger',meta:'6 people · 3 bedrooms · 89 m² · dishwasher',eur:1564},
+];
+const CARS=[
+ {id:'arona',name:'Seat Arona (Avis)',meta:'SUV · 3 bags',usd:461},
+ {id:'ateca',name:'Seat Ateca (Avis)',meta:'SUV · 4 bags',usd:478},
+ {id:'karoq',name:'Skoda Karoq (Europcar)',meta:'SUV · 4 bags',usd:609},
+ {id:'cupra',name:'Cupra Tavascan (Europcar)',meta:'Electric SUV · 4 bags',usd:642},
+];
+const FOOD=[
+ {id:'none',name:'None, we cook',meta:'Cottage kitchen, shop and Lidl',a:0,c:0},
+ {id:'bf',name:'Breakfast buffet',meta:'Market Restaurant',a:138.29,c:68.99},
+ {id:'din',name:'Dinner buffet',meta:'Market Restaurant',a:264.29,c:106.79},
+ {id:'half',name:'Half board',meta:'Breakfast + dinner buffet',a:390.29,c:162.23},
+ {id:'full',name:'Full board',meta:'Breakfast, à la carte lunch, dinner',a:545.65,c:209.65},
+];
+const ECARS=[
+ {id:'none',name:'None',meta:'Walk or bike',eur:0},
+ {id:'e4',name:'4-person e-car',meta:'Per family',eur:240},
+ {id:'e6',name:'6-person e-car',meta:'Per family',eur:270},
+];
+const AGENT=10379, FAMS=2, PEOPLE=8;
+const st={cottage:'comfort',car:'ateca',cars:2,food:'none',ecar:'none',view:'both'};
+try{const s=JSON.parse(localStorage.getItem('allgau-cmp')||'null');if(s)Object.assign(st,s)}catch(e){}
+const eur=n=>'€'+Math.round(n).toLocaleString('en-US');
+const usd=n=>'$'+Math.round(n).toLocaleString('en-US');
+
+function radios(el,name,list,price){
+  el.innerHTML=list.map(o=>`<label class="opt"><input type="radio" name="${name}" id="${name}-${o.id}" value="${o.id}" ${st[name]===o.id?'checked':''}><span style="flex:1;min-width:0"><span class="t"><span>${o.name}</span><span class="num">${price(o)}</span></span><small>${o.meta}</small></span></label>`).join('');
+  el.addEventListener('change',e=>{st[name]=e.target.value;render()});
+}
+radios(document.getElementById('o-cottage'),'cottage',COTTAGES,o=>eur(o.eur));
+radios(document.getElementById('o-car'),'car',CARS,o=>usd(o.usd));
+radios(document.getElementById('o-food'),'food',FOOD,o=>o.a?eur(o.a*2+o.c*2)+' / family':'€0');
+radios(document.getElementById('o-ecar'),'ecar',ECARS,o=>eur(o.eur));
+
+document.querySelectorAll('[data-cars]').forEach(b=>b.addEventListener('click',()=>{st.cars=+b.dataset.cars;render()}));
+document.getElementById('v-both').onclick=()=>{st.view='both';render()};
+document.getElementById('v-fam').onclick=()=>{st.view='fam';render()};
+['i-flight','i-fx'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+
+function render(){
+  const fx=Math.max(+document.getElementById('i-fx').value||1.17,0.1);
+  const fl=+document.getElementById('i-flight').value||0;
+  const cot=COTTAGES.find(o=>o.id===st.cottage), car=CARS.find(o=>o.id===st.car);
+  const food=FOOD.find(o=>o.id===st.food), ec=ECARS.find(o=>o.id===st.ecar);
+  const div=st.view==='fam'?FAMS:1;
+
+  const flightsUSD=fl*PEOPLE, carsUSD=car.usd*st.cars;
+  const flights=flightsUSD/fx, cars=carsUSD/fx, cottages=cot.eur*FAMS;
+  const foodT=(food.a*2+food.c*2)*FAMS, ecarT=ec.eur*FAMS;
+  const diyBasic=flights+cars+cottages, extras=foodT+ecarT;
+  const agentT=AGENT+extras, diyT=diyBasic+extras, d=AGENT-diyBasic;
+
+  document.getElementById('s-agent').textContent=eur(agentT/div);
+  document.getElementById('s-diy').textContent=eur(diyT/div);
+  const scope=st.view==='fam'?'per family':'both families';
+  document.getElementById('s-agent-sub').textContent=`${eur(agentT/PEOPLE)} per person · ${scope}`;
+  document.getElementById('s-diy-sub').textContent=`${eur(diyT/PEOPLE)} per person · ${scope}`;
+  const dl=document.getElementById('s-delta');
+  dl.className='delta '+(d>=0?'good':'bad');
+  document.getElementById('s-delta-lbl').textContent=d>=0?'Booking ourselves saves':'Agent is cheaper by';
+  document.getElementById('s-delta-val').textContent=eur(Math.abs(d)/div);
+  document.getElementById('s-delta-sub').textContent=`${eur(Math.abs(d)/PEOPLE)} per person`;
+
+  const R=(item,sub,a,o)=>`<tr><td>${item}${sub?`<small>${sub}</small>`:''}</td><td class="r num ${typeof a==='string'?'inc':''}">${typeof a==='string'?a:eur(a/div)}</td><td class="r num">${eur(o/div)}</td></tr>`;
+  document.getElementById('bill').innerHTML=
+    `<tr class="sec"><td colspan="3">Basic package</td></tr>`+
+    R('Flights, 8 people','Lufthansa direct · '+usd(fl)+' × 8 = '+usd(flightsUSD),'Included',flights)+
+    R(`${st.cars} × ${car.name}`,'8 days · '+usd(carsUSD)+(st.cars===1?' · only 5 seats for 8 people':''),'Included',cars)+
+    R('2 × '+cot.name,cot.meta+' · '+eur(cot.eur)+' each','Included',cottages)+
+    `<tr><td><b>Basic subtotal</b></td><td class="r num"><b>${eur(AGENT/div)}</b></td><td class="r num"><b>${eur(diyBasic/div)}</b></td></tr>`+
+    `<tr class="sec"><td colspan="3">Extras (same on both sides)</td></tr>`+
+    R(food.name,food.a?`4 adults × ${eur(food.a)} + 4 kids × ${eur(food.c)}`:food.meta,foodT,foodT)+
+    R('E-car: '+ec.name,ec.eur?'2 families × '+eur(ec.eur):ec.meta,ecarT,ecarT)+
+    `<tr class="total"><td>Total</td><td class="r num">${eur(agentT/div)}</td><td class="r num">${eur(diyT/div)}</td></tr>`;
+
+  document.querySelectorAll('[data-cars]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.cars===st.cars));
+  document.getElementById('v-both').setAttribute('aria-pressed',st.view==='both');
+  document.getElementById('v-fam').setAttribute('aria-pressed',st.view==='fam');
+  try{localStorage.setItem('allgau-cmp',JSON.stringify(st))}catch(e){}
+}
+render();
+</script>
+</body>
+</html>
