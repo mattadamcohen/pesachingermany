@@ -87,7 +87,7 @@ tr.total td{font-weight:700;font-size:15px;border-bottom:0;border-top:2px solid 
   <header>
     <p class="eyebrow">Center Parcs Park Allgäu · Fri 23 – Fri 30 April 2027</p>
     <h1>Travel agent package vs booking it ourselves</h1>
-    <p class="lede">Two families, each 2 adults and 2 kids (ages 4 and 7). Direct Lufthansa TLV ⇄ Munich on both sides. Pick options on the left and the totals update. Food and the park e-car are added to both columns, since the agent quote doesn't include them either.</p>
+    <p class="lede">Two families, each 2 adults and 2 kids (ages 4 and 7). Direct Lufthansa TLV ⇄ Munich on both sides. Pick options on the left and the totals update. The agent's price stays fixed at their quote. Food and the park e-car only change our side.</p>
   </header>
 
   <div class="seg" role="group" aria-label="Show totals for">
@@ -209,7 +209,7 @@ function render(){
   const flights=flightsUSD/fx, cars=carsUSD/fx, cottages=cot.eur*FAMS;
   const foodT=(food.a*2+food.c*2)*FAMS, ecarT=ec.eur*FAMS;
   const diyBasic=flights+cars+cottages, extras=foodT+ecarT;
-  const agentT=AGENT+extras, diyT=diyBasic+extras, d=AGENT-diyBasic;
+  const agentT=AGENT, diyT=diyBasic+extras, d=AGENT-diyT;
 
   document.getElementById('s-agent').textContent=eur(agentT/div);
   document.getElementById('s-diy').textContent=eur(diyT/div);
@@ -229,9 +229,9 @@ function render(){
     R(`${st.cars} × ${car.name}`,'8 days · '+usd(carsUSD)+(st.cars===1?' · only 5 seats for 8 people':''),'Included',cars)+
     R('2 × '+cot.name,cot.meta+' · '+eur(cot.eur)+' each','Included',cottages)+
     `<tr><td><b>Basic subtotal</b></td><td class="r num"><b>${eur(AGENT/div)}</b></td><td class="r num"><b>${eur(diyBasic/div)}</b></td></tr>`+
-    `<tr class="sec"><td colspan="3">Extras (same on both sides)</td></tr>`+
-    R(food.name,food.a?`4 adults × ${eur(food.a)} + 4 kids × ${eur(food.c)}`:food.meta,foodT,foodT)+
-    R('E-car: '+ec.name,ec.eur?'2 families × '+eur(ec.eur):ec.meta,ecarT,ecarT)+
+    `<tr class="sec"><td colspan="3">Extras (our side only)</td></tr>`+
+    R(food.name,food.a?`4 adults × ${eur(food.a)} + 4 kids × ${eur(food.c)}`:food.meta,'Not quoted',foodT)+
+    R('E-car: '+ec.name,ec.eur?'2 families × '+eur(ec.eur):ec.meta,'Not quoted',ecarT)+
     `<tr class="total"><td>Total</td><td class="r num">${eur(agentT/div)}</td><td class="r num">${eur(diyT/div)}</td></tr>`;
 
   document.querySelectorAll('[data-cars]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.cars===st.cars));
